@@ -1,3 +1,4 @@
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import adapter from "@sveltejs/adapter-static";
 
 const BASE_PATH = "/svelte-github-template";
@@ -12,6 +13,8 @@ const config = {
       base: process.argv.includes("dev") ? "" : BASE_PATH,
     },
   },
+
+  preprocess: [vitePreprocess({})],
 };
 
 export default config;
