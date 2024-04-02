@@ -102,6 +102,14 @@ You can recreate the repository yourself with the following steps:
 
 6. Run `yarn build` to build the application and `yarn preview` to view the deployed application locally.
 
+## CI/CD
+
+The repository is configured with automatic monthly updates using Dependabot and automatic build testing before each pull request. The following GitHub settings are enabled:
+
+- **General > Allow auto-merge**
+- **Branches > Branch protection > Require status checks to pass before merging (pull_request_build)**
+- **Branches > Branch protection > Require linear history**
+
 ## Useful links
 
 - https://kit.svelte.dev/docs/adapter-static
