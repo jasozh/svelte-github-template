@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   // logic goes here
 </script>
 
