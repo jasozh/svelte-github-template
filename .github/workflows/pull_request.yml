@@ -1,0 +1,29 @@
+# This workflow will attempt to install, build, and start the project for every
+# pull request to the main branch.
+
+name: Pull request workflow
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  pull_request_build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Build frontend
+        run: npm run build
