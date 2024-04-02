@@ -1,5 +1,5 @@
-<div class="min-w-screen min-h-screen flex justify-center">
-  <div class="flex flex-col items-center mt-32">
+<div class="min-w-screen flex min-h-screen justify-center">
+  <div class="mt-32 flex flex-col items-center">
     <img src="favicon.png" alt="Svelte logo" class="mb-4" />
     <h1>Welcome to SvelteKit</h1>
     <p>
