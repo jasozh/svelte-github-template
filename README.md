@@ -8,7 +8,9 @@ You can recreate the repository yourself with the following steps:
 
 1. Run `npm create svelte@latest svelte-github-template` and push to a new repository.
 
-2. In GitHub, go to **Settings > Pages > Build and deployment > Source > GitHub Actions** and generate `svelte.yml` by clicking pasting in the following:
+2. Run `npx prettier . --write` to standardize formatting and indentation across all files (by default it is inconsistent).
+
+3. In GitHub, go to **Settings > Pages > Build and deployment > Source > GitHub Actions** and generate `svelte.yml` by clicking pasting in the following:
 
    ```yml
    name: Deploy to GitHub Pages
@@ -69,7 +71,7 @@ You can recreate the repository yourself with the following steps:
            uses: actions/deploy-pages@v4
    ```
 
-3. Modify `svelte.config.js` to be the following so that we incorporate the base path of the repository:
+4. Modify `svelte.config.js` to be the following so that we incorporate the base path of the repository:
 
    ```js
    import adapter from "@sveltejs/adapter-static";
@@ -91,16 +93,16 @@ You can recreate the repository yourself with the following steps:
    export default config;
    ```
 
-4. Add the following options to `src/+layout.js`:
+5. Add the following options to `src/+layout.js`:
 
    ```js
    export const prerender = true;
    export const trailingSlash = "always";
    ```
 
-5. Install Tailwind CSS with `npx svelte-add@latest tailwindcss`.
+6. Install Tailwind CSS with `npx svelte-add@latest tailwindcss`.
 
-6. Run `yarn build` to build the application and `yarn preview` to view the deployed application locally.
+7. Run `yarn build` to build the application and `yarn preview` to view the deployed application locally.
 
 ## CI/CD
 
