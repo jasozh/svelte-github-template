@@ -9,6 +9,7 @@ on:
 
 jobs:
   build:
+    name: pull_request_status_check
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
