@@ -115,7 +115,6 @@ The following GitHub settings are enabled:
 
 - **General > Allow auto-merge**
 - **Branches > Branch protection > Require status checks to pass before merging (pull_request_build)**
-- **Branches > Branch protection > Require linear history**
 
 ## Useful links
 
