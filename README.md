@@ -75,9 +75,9 @@ You can recreate the repository yourself with the following steps:
 
    ```js
    import adapter from "@sveltejs/adapter-static";
-
+   
    const BASE_PATH = "/svelte-github-template";
-
+   
    /** @type {import('@sveltejs/kit').Config} */
    const config = {
      kit: {
@@ -89,7 +89,7 @@ You can recreate the repository yourself with the following steps:
        },
      },
    };
-
+   
    export default config;
    ```
 
