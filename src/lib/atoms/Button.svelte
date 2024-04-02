@@ -1,9 +1,9 @@
 <script lang="ts">
-// logic goes here
+  // logic goes here
 </script>
 
 <!-- markup (zero or more items) goes here -->
 
 <style>
-/* styles go here */
+  /* styles go here */
 </style>
