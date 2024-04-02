@@ -10,6 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
       - name: Checkout repository
@@ -26,6 +27,3 @@ jobs:
 
       - name: Build frontend
         run: npm run build
-
-      - name: Start frontend
-        run: npm run preview
