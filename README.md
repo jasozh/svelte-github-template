@@ -78,7 +78,7 @@ You can recreate the repository yourself with the following steps:
    
    const BASE_PATH = "/svelte-github-template";
    
-   /** @type {import('@sveltejs/kit').Config} */
+   /** @type {import("@sveltejs/kit").Config} */
    const config = {
      kit: {
        adapter: adapter({

@@ -3,7 +3,7 @@ import adapter from "@sveltejs/adapter-static";
 
 const BASE_PATH = "/svelte-github-template";
 
-/** @type {import('@sveltejs/kit').Config} */
+/** @type {import("@sveltejs/kit").Config} */
 const config = {
   kit: {
     adapter: adapter({
