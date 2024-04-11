@@ -6,11 +6,75 @@ An unopinionated Svelte web template for deploying to GitHub Pages bundling Type
 
 You can recreate the repository yourself with the following steps:
 
-1. Run `npm create svelte@latest svelte-github-template` and push to a new repository.
+1. Run `npm create svelte@latest svelte-github-template` and select the **Skeleton project** app template. Enable TypeScript, ESLint, and Prettier. Then, push to a new repository.
 
-2. Run `npx prettier . --write` to standardize formatting and indentation across all files (by default it is inconsistent).
+2. Install dependencies
 
-3. In GitHub, go to **Settings > Pages > Build and deployment > Source > GitHub Actions** and generate `svelte.yml` by clicking pasting in the following:
+   ```bash
+   npx svelte-add@latest tailwindcss
+
+   yarn add --dev \
+       @sveltejs/adapter-static \
+       prettier-plugin-classnames \
+       prettier-plugin-jsdoc \
+       prettier-plugin-merge \
+       prettier-plugin-tailwindcss
+   ```
+
+3. Replace `.prettierrc` with the following:
+
+   ```json
+   {
+     "trailingComma": "es5",
+     "plugins": [
+       "prettier-plugin-classnames",
+       "prettier-plugin-jsdoc",
+       "prettier-plugin-svelte",
+       "prettier-plugin-tailwindcss",
+       "prettier-plugin-merge"
+     ],
+     "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }],
+     "endingPosition": "absolute-with-indent"
+   }
+   ```
+
+4. Run `npx prettier --write .` to standardize formatting and indentation across all files (by default it is inconsistent).
+
+5. Modify `svelte.config.js` to be the following so that we incorporate the base path of the repository:
+
+   ```js
+   import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
+   import adapter from "@sveltejs/adapter-static";
+   
+   const BASE_PATH = "/svelte-github-template";
+   
+   /** @type {import("@sveltejs/kit").Config} */
+   const config = {
+     kit: {
+       adapter: adapter({
+         fallback: "404.html",
+       }),
+       paths: {
+         base: process.argv.includes("dev") ? "" : BASE_PATH,
+       },
+     },
+   
+     preprocess: [vitePreprocess({})],
+   };
+   
+   export default config;
+   ```
+
+6. Add the following options to `src/routes/+layout.ts`:
+
+   ```js
+   export const prerender = true;
+   export const trailingSlash = "always";
+   ```
+
+7. Run `yarn build` to build the application and `yarn preview` to view the deployed application locally.
+
+8. In GitHub, go to **Settings > Pages > Build and deployment > Source > GitHub Actions** and generate `svelte.yml` by clicking pasting in the following:
 
    ```yml
    name: Deploy to GitHub Pages
@@ -70,39 +134,6 @@ You can recreate the repository yourself with the following steps:
            id: deployment
            uses: actions/deploy-pages@v4
    ```
-
-4. Modify `svelte.config.js` to be the following so that we incorporate the base path of the repository:
-
-   ```js
-   import adapter from "@sveltejs/adapter-static";
-   
-   const BASE_PATH = "/svelte-github-template";
-   
-   /** @type {import("@sveltejs/kit").Config} */
-   const config = {
-     kit: {
-       adapter: adapter({
-         fallback: "404.html",
-       }),
-       paths: {
-         base: process.argv.includes("dev") ? "" : BASE_PATH,
-       },
-     },
-   };
-   
-   export default config;
-   ```
-
-5. Add the following options to `src/+layout.js`:
-
-   ```js
-   export const prerender = true;
-   export const trailingSlash = "always";
-   ```
-
-6. Install Tailwind CSS with `npx svelte-add@latest tailwindcss`.
-
-7. Run `yarn build` to build the application and `yarn preview` to view the deployed application locally.
 
 ## CI/CD
 
