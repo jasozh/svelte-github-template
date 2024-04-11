@@ -8,7 +8,7 @@ You can recreate the repository yourself with the following steps:
 
 1. Run `npm create svelte@latest svelte-github-template` and select the **Skeleton project** app template. Enable TypeScript, ESLint, and Prettier. Then, push to a new repository.
 
-2. Install dependencies
+2. Install dependencies:
 
    ```bash
    npx svelte-add@latest tailwindcss
