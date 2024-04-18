@@ -92,7 +92,7 @@ You can recreate the repository yourself with the following steps:
 
 10. Run `yarn build` to build the application and `yarn preview` to view the deployed application locally.
 
-11. In GitHub, go to **Settings > Pages > Build and deployment > Source > GitHub Actions** and generate `svelte.yml` by clicking pasting in the following:
+11. In GitHub, go to **Settings > Pages > Build and deployment > Source > GitHub Actions** and generate `svelte.yml` by pasting in the following:
 
     ```yml
     name: Deploy to GitHub Pages
