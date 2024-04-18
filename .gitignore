@@ -9,5 +9,8 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# dependencies
+# Custom files
+
+# Note: we can only comment out the entire .yarn folder since we strictly stick
+# to nodeLinker: node-modules. If using pnp, the folder contains important info
 .yarn
