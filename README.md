@@ -8,7 +8,7 @@ You can recreate the repository yourself with the following steps:
 
 1. Run `npm create svelte@latest svelte-github-template` and select the **Skeleton project** app template. Enable TypeScript, ESLint, and Prettier. Then, push to a new repository.
 
-2. Install yarn and add `.yarn` to your `.gitignore` file:
+2. Install yarn:
 
    ```bash
    # Enable corepack if not already enabled
@@ -18,7 +18,15 @@ You can recreate the repository yourself with the following steps:
    yarn set version stable
    ```
 
-3. Install dependencies:
+3. Add `.yarn` to your `.gitignore` file.
+
+4. Create `.yarnrc.yml` and paste in the following to disable plug-and-play mode:
+
+   ```yaml
+   nodeLinker: node-modules
+   ```
+
+5. Install dependencies:
 
    ```bash
    npx svelte-add@latest tailwindcss
@@ -31,7 +39,7 @@ You can recreate the repository yourself with the following steps:
        prettier-plugin-tailwindcss
    ```
 
-4. Replace `.prettierrc` with the following:
+6. Replace `.prettierrc` with the following:
 
    ```json
    {
@@ -48,9 +56,9 @@ You can recreate the repository yourself with the following steps:
    }
    ```
 
-5. Run `npx prettier --write .` to standardize formatting and indentation across all files (by default it is inconsistent).
+7. Run `npx prettier --write .` to standardize formatting and indentation across all files (by default it is inconsistent).
 
-6. Modify `svelte.config.js` to be the following so that we incorporate the base path of the repository:
+8. Modify `svelte.config.js` to be the following so that we incorporate the base path of the repository:
 
    ```js
    import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
@@ -75,75 +83,75 @@ You can recreate the repository yourself with the following steps:
    export default config;
    ```
 
-7. Add the following options to `src/routes/+layout.ts`:
+9. Add the following options to `src/routes/+layout.ts`:
 
    ```js
    export const prerender = true;
    export const trailingSlash = "always";
    ```
 
-8. Run `yarn build` to build the application and `yarn preview` to view the deployed application locally.
+10. Run `yarn build` to build the application and `yarn preview` to view the deployed application locally.
 
-9. In GitHub, go to **Settings > Pages > Build and deployment > Source > GitHub Actions** and generate `svelte.yml` by clicking pasting in the following:
+11. In GitHub, go to **Settings > Pages > Build and deployment > Source > GitHub Actions** and generate `svelte.yml` by clicking pasting in the following:
 
-   ```yml
-   name: Deploy to GitHub Pages
+    ```yml
+    name: Deploy to GitHub Pages
 
-   on:
-   push:
-       branches: 'main'
+    on:
+    push:
+        branches: 'main'
 
-   jobs:
-   build_site:
-       runs-on: ubuntu-latest
-       steps:
-       - name: Checkout
-           uses: actions/checkout@v4
+    jobs:
+    build_site:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout
+            uses: actions/checkout@v4
 
-       # If you're using pnpm, add this step then change the commands and cache key below to use `pnpm`
-       # - name: Install pnpm
-       #   uses: pnpm/action-setup@v3
-       #   with:
-       #     version: 8
+        # If you're using pnpm, add this step then change the commands and cache key below to use `pnpm`
+        # - name: Install pnpm
+        #   uses: pnpm/action-setup@v3
+        #   with:
+        #     version: 8
 
-       - name: Install Node.js
-           uses: actions/setup-node@v4
-           with:
-           node-version: 20
-           cache: npm
+        - name: Install Node.js
+            uses: actions/setup-node@v4
+            with:
+            node-version: 20
+            cache: npm
 
-       - name: Install dependencies
-           run: npm install
+        - name: Install dependencies
+            run: npm install
 
-       - name: build
-           env:
-           BASE_PATH: '/${{ github.event.repository.name }}'
-           run: |
-           npm run build
+        - name: build
+            env:
+            BASE_PATH: '/${{ github.event.repository.name }}'
+            run: |
+            npm run build
 
-       - name: Upload Artifacts
-           uses: actions/upload-pages-artifact@v3
-           with:
-           # this should match the `pages` option in your adapter-static options
-           path: 'build/'
+        - name: Upload Artifacts
+            uses: actions/upload-pages-artifact@v3
+            with:
+            # this should match the `pages` option in your adapter-static options
+            path: 'build/'
 
-   deploy:
-       needs: build_site
-       runs-on: ubuntu-latest
+    deploy:
+        needs: build_site
+        runs-on: ubuntu-latest
 
-       permissions:
-       pages: write
-       id-token: write
+        permissions:
+        pages: write
+        id-token: write
 
-       environment:
-       name: github-pages
-       url: ${{ steps.deployment.outputs.page_url }}
+        environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
 
-       steps:
-       - name: Deploy
-           id: deployment
-           uses: actions/deploy-pages@v4
-   ```
+        steps:
+        - name: Deploy
+            id: deployment
+            uses: actions/deploy-pages@v4
+    ```
 
 ## CI/CD
 
