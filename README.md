@@ -8,7 +8,17 @@ You can recreate the repository yourself with the following steps:
 
 1. Run `npm create svelte@latest svelte-github-template` and select the **Skeleton project** app template. Enable TypeScript, ESLint, and Prettier. Then, push to a new repository.
 
-2. Install dependencies:
+2. Install yarn and add `.yarn` to your `.gitignore` file:
+
+   ```bash
+   # Enable corepack if not already enabled
+   corepack enable
+
+   # Install latest version of yarn
+   yarn set version stable
+   ```
+
+3. Install dependencies:
 
    ```bash
    npx svelte-add@latest tailwindcss
@@ -21,7 +31,7 @@ You can recreate the repository yourself with the following steps:
        prettier-plugin-tailwindcss
    ```
 
-3. Replace `.prettierrc` with the following:
+4. Replace `.prettierrc` with the following:
 
    ```json
    {
@@ -38,9 +48,9 @@ You can recreate the repository yourself with the following steps:
    }
    ```
 
-4. Run `npx prettier --write .` to standardize formatting and indentation across all files (by default it is inconsistent).
+5. Run `npx prettier --write .` to standardize formatting and indentation across all files (by default it is inconsistent).
 
-5. Modify `svelte.config.js` to be the following so that we incorporate the base path of the repository:
+6. Modify `svelte.config.js` to be the following so that we incorporate the base path of the repository:
 
    ```js
    import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
@@ -65,16 +75,16 @@ You can recreate the repository yourself with the following steps:
    export default config;
    ```
 
-6. Add the following options to `src/routes/+layout.ts`:
+7. Add the following options to `src/routes/+layout.ts`:
 
    ```js
    export const prerender = true;
    export const trailingSlash = "always";
    ```
 
-7. Run `yarn build` to build the application and `yarn preview` to view the deployed application locally.
+8. Run `yarn build` to build the application and `yarn preview` to view the deployed application locally.
 
-8. In GitHub, go to **Settings > Pages > Build and deployment > Source > GitHub Actions** and generate `svelte.yml` by clicking pasting in the following:
+9. In GitHub, go to **Settings > Pages > Build and deployment > Source > GitHub Actions** and generate `svelte.yml` by clicking pasting in the following:
 
    ```yml
    name: Deploy to GitHub Pages
