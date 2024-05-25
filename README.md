@@ -6,88 +6,88 @@ An unopinionated Svelte web template for deploying to GitHub Pages bundling Type
 
 You can recreate the repository yourself with the following steps:
 
-1. Run `npm create svelte@latest svelte-github-template` and select the **Skeleton project** app template. Enable TypeScript, ESLint, and Prettier. Then, push to a new repository.
+1.  Run `npm create svelte@latest svelte-github-template` and select the **Skeleton project** app template. Enable TypeScript, ESLint, and Prettier. Then, push to a new repository.
 
-2. Install yarn:
+2.  Install yarn:
 
-   ```bash
-   # Enable corepack if not already enabled
-   corepack enable
+    ```bash
+    # Enable corepack if not already enabled
+    corepack enable
 
-   # Install latest version of yarn
-   yarn set version stable
-   ```
+    # Install latest version of yarn
+    yarn set version stable
+    ```
 
-3. Add `.yarn` to your `.gitignore` file.
+3.  Add `.yarn` to your `.gitignore` file.
 
-4. Create `.yarnrc.yml` and paste in the following to disable plug-and-play mode:
+4.  Create `.yarnrc.yml` and paste in the following to disable plug-and-play mode:
 
-   ```yaml
-   nodeLinker: node-modules
-   ```
+    ```yaml
+    nodeLinker: node-modules
+    ```
 
-5. Install dependencies:
+5.  Install dependencies:
 
-   ```bash
-   npx @svelte-add/tailwindcss@latest --typography true
+    ```bash
+    npx @svelte-add/tailwindcss@latest --typography true
 
     yarn add --dev \
         @sveltejs/adapter-static \
         prettier-plugin-classnames \
         prettier-plugin-jsdoc \
         prettier-plugin-merge
-   ```
+    ```
 
-6. Replace `.prettierrc` with the following:
+6.  Replace `.prettierrc` with the following:
 
-   ```json
-   {
-     "trailingComma": "es5",
-     "plugins": [
-       "prettier-plugin-classnames",
-       "prettier-plugin-jsdoc",
-       "prettier-plugin-svelte",
-       "prettier-plugin-tailwindcss",
-       "prettier-plugin-merge"
-     ],
-     "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }],
-     "endingPosition": "absolute-with-indent"
-   }
-   ```
+    ```json
+    {
+      "trailingComma": "es5",
+      "plugins": [
+        "prettier-plugin-classnames",
+        "prettier-plugin-jsdoc",
+        "prettier-plugin-svelte",
+        "prettier-plugin-tailwindcss",
+        "prettier-plugin-merge"
+      ],
+      "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }],
+      "endingPosition": "absolute-with-indent"
+    }
+    ```
 
-7. Run `npx prettier --write .` to standardize formatting and indentation across all files (by default it is inconsistent).
+7.  Run `npx prettier --write .` to standardize formatting and indentation across all files (by default it is inconsistent).
 
-8. Modify `svelte.config.js` to be the following so that we incorporate the base path of the repository:
+8.  Modify `svelte.config.js` to be the following so that we incorporate the base path of the repository:
 
-   ```js
-   import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
-   import adapter from "@sveltejs/adapter-static";
-   
-   const BASE_PATH = "/svelte-github-template";
-   
-   /** @type {import("@sveltejs/kit").Config} */
-   const config = {
-     kit: {
-       adapter: adapter({
-         fallback: "404.html",
-       }),
-       paths: {
-         base: process.argv.includes("dev") ? "" : BASE_PATH,
-       },
-     },
-   
-     preprocess: [vitePreprocess({})],
-   };
-   
-   export default config;
-   ```
+    ```js
+    import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
+    import adapter from "@sveltejs/adapter-static";
+    
+    const BASE_PATH = "/svelte-github-template";
+    
+    /** @type {import("@sveltejs/kit").Config} */
+    const config = {
+      kit: {
+        adapter: adapter({
+          fallback: "404.html",
+        }),
+        paths: {
+          base: process.argv.includes("dev") ? "" : BASE_PATH,
+        },
+      },
+    
+      preprocess: [vitePreprocess({})],
+    };
+    
+    export default config;
+    ```
 
-9. Add the following options to `src/routes/+layout.ts`:
+9.  Add the following options to `src/routes/+layout.ts`:
 
-   ```js
-   export const prerender = true;
-   export const trailingSlash = "always";
-   ```
+    ```js
+    export const prerender = true;
+    export const trailingSlash = "always";
+    ```
 
 10. Run `yarn build` to build the application and `yarn preview` to view the deployed application locally.
 
@@ -97,51 +97,51 @@ You can recreate the repository yourself with the following steps:
     name: Deploy to GitHub Pages
 
     on:
-    push:
+      push:
         branches: "main"
 
     jobs:
-    build_site:
+      build_site:
         runs-on: ubuntu-latest
         steps:
-        - name: Checkout
+          - name: Checkout
             uses: actions/checkout@v4
 
-        - name: Install Node.js
+          - name: Install Node.js
             uses: actions/setup-node@v4
             with:
-            node-version: 20
-            cache: npm
+              node-version: 20
+              cache: npm
 
-        - name: Install dependencies
+          - name: Install dependencies
             run: npm install
 
-        - name: build
+          - name: build
             env:
-            BASE_PATH: "/${{ github.event.repository.name }}"
+              BASE_PATH: "/${{ github.event.repository.name }}"
             run: |
-            npm run build
+              npm run build
 
-        - name: Upload Artifacts
+          - name: Upload Artifacts
             uses: actions/upload-pages-artifact@v3
             with:
-            # this should match the `pages` option in your adapter-static options
-            path: "build/"
+              # this should match the `pages` option in your adapter-static options
+              path: "build/"
 
-    deploy:
+      deploy:
         needs: build_site
         runs-on: ubuntu-latest
 
         permissions:
-        pages: write
-        id-token: write
+          pages: write
+          id-token: write
 
         environment:
-        name: github-pages
-        url: ${{ steps.deployment.outputs.page_url }}
+          name: github-pages
+          url: ${{ steps.deployment.outputs.page_url }}
 
         steps:
-        - name: Deploy
+          - name: Deploy
             id: deployment
             uses: actions/deploy-pages@v4
     ```
