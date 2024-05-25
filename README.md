@@ -29,14 +29,13 @@ You can recreate the repository yourself with the following steps:
 5. Install dependencies:
 
    ```bash
-   npx svelte-add@latest tailwindcss
+   npx @svelte-add/tailwindcss@latest --typography true
 
-   yarn add --dev \
-       @sveltejs/adapter-static \
-       prettier-plugin-classnames \
-       prettier-plugin-jsdoc \
-       prettier-plugin-merge \
-       prettier-plugin-tailwindcss
+    yarn add --dev \
+        @sveltejs/adapter-static \
+        prettier-plugin-classnames \
+        prettier-plugin-jsdoc \
+        prettier-plugin-merge
    ```
 
 6. Replace `.prettierrc` with the following:
@@ -99,7 +98,7 @@ You can recreate the repository yourself with the following steps:
 
     on:
     push:
-        branches: 'main'
+        branches: "main"
 
     jobs:
     build_site:
@@ -107,12 +106,6 @@ You can recreate the repository yourself with the following steps:
         steps:
         - name: Checkout
             uses: actions/checkout@v4
-
-        # If you're using pnpm, add this step then change the commands and cache key below to use `pnpm`
-        # - name: Install pnpm
-        #   uses: pnpm/action-setup@v3
-        #   with:
-        #     version: 8
 
         - name: Install Node.js
             uses: actions/setup-node@v4
@@ -125,7 +118,7 @@ You can recreate the repository yourself with the following steps:
 
         - name: build
             env:
-            BASE_PATH: '/${{ github.event.repository.name }}'
+            BASE_PATH: "/${{ github.event.repository.name }}"
             run: |
             npm run build
 
@@ -133,7 +126,7 @@ You can recreate the repository yourself with the following steps:
             uses: actions/upload-pages-artifact@v3
             with:
             # this should match the `pages` option in your adapter-static options
-            path: 'build/'
+            path: "build/"
 
     deploy:
         needs: build_site
@@ -155,7 +148,7 @@ You can recreate the repository yourself with the following steps:
 
 ## CI/CD
 
-The repository is configured with automatic monthly updates using Dependabot and automatic build testing before each pull request. The CI/CD pipeline consists of the following workflows:
+The repository is configured with automatic daily updates using Dependabot and automatic build testing before each pull request. The CI/CD pipeline consists of the following workflows:
 
 - `svelte.yml` automatically deploys the website to GitHub Pages on every push to the `main` branch.
 - `pull_request.yml` runs a sanity check on every opened pull request to make sure the app still builds.
@@ -164,7 +157,6 @@ The repository is configured with automatic monthly updates using Dependabot and
 
 The following GitHub settings are enabled:
 
-- **General > Allow auto-merge**
 - **Branches > Branch protection > Require status checks to pass before merging (pull_request_build)**
 
 ## Useful links

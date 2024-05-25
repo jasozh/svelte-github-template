@@ -9,22 +9,26 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "daily"
     allow:
       - dependency-type: "all"
     groups:
       all-dependencies:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   # Maintain dependencies for GitHub Actions
+  #
   # Workflow files stored in the default location of `.github/workflows`. You
   # don't need to specify `/.github/workflows` for `directory`. You can use
   # `directory: "/"`.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "daily"
     allow:
       - dependency-type: "all"
     groups:
