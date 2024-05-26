@@ -152,7 +152,7 @@ The repository is configured with automatic daily updates using Dependabot and a
 
 - `svelte.yml` automatically deploys the website to GitHub Pages on every push to the `main` branch.
 - `pull_request.yml` runs a sanity check on every opened pull request to make sure the app still builds.
-- `dependabot.yml` automatically updates versions on a monthly basis.
+- `dependabot.yml` automatically updates dependencies on a daily basis. Major updates have individual pull requests while all minor and patch updates are grouped together.
 - `dependabot_auto_merge.yml` automatically merges pull requests by Dependabot if it passes the sanity check.
 
 The following GitHub settings are enabled:
