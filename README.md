@@ -62,9 +62,9 @@ You can recreate the repository yourself with the following steps:
     ```js
     import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
     import adapter from "@sveltejs/adapter-static";
-
+    
     const BASE_PATH = "/svelte-github-template";
-
+    
     /** @type {import("@sveltejs/kit").Config} */
     const config = {
       kit: {
@@ -75,10 +75,10 @@ You can recreate the repository yourself with the following steps:
           base: process.argv.includes("dev") ? "" : BASE_PATH,
         },
       },
-
+    
       preprocess: [vitePreprocess({})],
     };
-
+    
     export default config;
     ```
 
